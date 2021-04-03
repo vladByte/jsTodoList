@@ -5,17 +5,22 @@ document.addEventListener('DOMContentLoaded',function(){
 	const btn_add = document.getElementById('add');
 	const table = document.getElementById('table');
 	const alert = document.getElementById('alert');
-
+	let id = 1;
 
 	function addTodo(){
 		if (lbl_title.value === "" || lbl_body.value === "") {
 			alert.classList.remove('d-none');
 			alert.innerText = "Title and description are required";
 		return;
-		}
+	}
+
+	function removeTodo(id){
+		document.getElementById(id).remove();
+	}
 		
 		alert.classList.add('d-none');
 		const row = table.insertRow();
+		row.setAttribute('id',id++)
 		row.innerHTML = `
 			<td>${lbl_title.value}</td>
 			<td>${lbl_body.value}</td>
@@ -33,8 +38,10 @@ document.addEventListener('DOMContentLoaded',function(){
 		btn_rm.classList.add('btn', 'btn-danger', 'mb-1', 'ml-1');
 		btn_rm.innerHTML = '<i class="fa fa-trash"></i>';
 		row.children[3].appendChild(btn_rm);
-		btn_rm.onclick = function(){
+		btn_rm.onclick = function(e){
 			console.log("Borrando Fila");
+			removeTodo(row.getAttribute('id'));
+			console.log(e);
 		};
 
 	}
